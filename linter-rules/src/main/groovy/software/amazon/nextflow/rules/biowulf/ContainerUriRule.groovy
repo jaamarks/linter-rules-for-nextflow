@@ -5,16 +5,18 @@ import org.codenarc.rule.AbstractAstVisitorRule
 import org.codenarc.rule.AbstractAstVisitor
 import org.codenarc.util.AstUtil
 
-/**
+/*
  * Checks that the URI of a container matches the ECR pattern
  *
  * @author Jesse Marks
  */
+
 class ContainerUriRule extends AbstractAstVisitorRule {
 
     String name = 'ContainerUriIsEcrUriJesse'
     int priority = 1
     Class astVisitorClass = ContainerUriAstVisitor
+
 }
 
 class ContainerUriAstVisitor extends AbstractAstVisitor {
@@ -38,8 +40,7 @@ class ContainerUriAstVisitor extends AbstractAstVisitor {
                 }
             }
         }
-
-
         super.visitMethodCallExpression(expression)
     }
+
 }
