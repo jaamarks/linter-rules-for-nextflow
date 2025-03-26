@@ -22,9 +22,3 @@ RUN wget https://repo1.maven.org/maven2/org/codenarc/CodeNarc/3.3.0/CodeNarc-3.3
 ENV ruleset "healthomics"
 ENV runtype "script"
 ENTRYPOINT bash check.sh ${ruleset} ${runtype}
-
-#ENV ruleset="healthomics"
-#ENV runtype="script"
-
-#ENTRYPOINT ["bash", "check.sh", "${ruleset}", "${runtype}"]
-#ENTRYPOINT ["bash", "check.sh", "${ruleset}"]
