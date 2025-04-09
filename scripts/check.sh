@@ -1,18 +1,15 @@
 #! /bin/bash
 
 RULESET="$1"
-RUNTYPE="$2"
 echo "Checking with ruleset: ${RULESET:=healthomics}"
-echo "Running on type: ${RUNTYPE:=script}"
 
-# Check if RUNTYPE is set to "script" or "config"
-if [ "$RUNTYPE" == "script" ]; then
-  INCLUDES="**/*.nf"
-elif [ "$RUNTYPE" == "config" ]; then
+if [ "$RULESET" == "config" ]; then
   INCLUDES="**/*.config"
+elif [ "$RULESET" == "general" || "$RULESET" == "healthomics" ]; then
+  INCLUDES="**/*.nf"
 else
-  # If RUN_TYPE is not "script" or "config", exit and show an error message
-  echo "Error: You need to specify either 'script' or 'config' as the argument."
+  # If RULESET is not "config", "healthomics", or "general" then exit and show an error message
+  echo "Error: You need to specify 'general', 'healthomics', or 'config' as the ruleset argument."
   exit 1
 fi
 

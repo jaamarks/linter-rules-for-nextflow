@@ -20,5 +20,4 @@ RUN wget https://repo1.maven.org/maven2/org/codenarc/CodeNarc/3.3.0/CodeNarc-3.3
     wget https://repo1.maven.org/maven2/org/slf4j/slf4j-simple/1.7.36/slf4j-simple-1.7.36.jar
 
 ENV ruleset "healthomics"
-ENV runtype "script"
-ENTRYPOINT bash check.sh ${ruleset} ${runtype}
+ENTRYPOINT bash check.sh ${ruleset}
