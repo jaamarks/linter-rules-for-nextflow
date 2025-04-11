@@ -31,37 +31,20 @@ class ConfigExecutorAstVisitor extends AbstractAstVisitor {
 
     @Override
     void visitBinaryExpression(BinaryExpression expression) {
-
         if (expression.leftExpression instanceof VariableExpression) {
-            checkVariableExpression(expression)
+            checkExecutorExpression(expression, expression.leftExpression as VariableExpression)
         } else if (expression.leftExpression instanceof PropertyExpression) {
-            checkPropertyExpression(expression)
+            checkExecutorExpression(expression, expression.leftExpression as PropertyExpression)
         }
         super.visitBinaryExpression(expression)
     }
 
-    private checkVariableExpression(final BinaryExpression expression) {
-
-        def varExpression = expression.leftExpression as VariableExpression
-        if (varExpression.text == 'executor') {
+    private void checkExecutorExpression(final BinaryExpression expression, def leftExpression) {
+        String executorName = leftExpression.text
+        if (executorName == 'executor' || executorName == 'process.executor') {
             if (expression.rightExpression instanceof ConstantExpression) {
                 def constExpression = expression.rightExpression as ConstantExpression
-                if ( HPC_EXECUTORS.contains(constExpression.value)){
-                    addViolation(constExpression, "Expected a cloud-based executor such as 'awsbatch', found '${constExpression.value}'.")
-                }
-            } else {
-                addViolation(expression.rightExpression, "Expected a string literal for executor such as 'awsbatch', found ${expression.rightExpression.text}")
-            }
-        }
-    }
-
-    private checkPropertyExpression(final BinaryExpression expression) {
-
-        def propExpression = expression.leftExpression as PropertyExpression
-        if (propExpression.text == 'process.executor') {
-            if (expression.rightExpression instanceof ConstantExpression) {
-                def constExpression = expression.rightExpression as ConstantExpression
-                if ( HPC_EXECUTORS.contains(constExpression.value) ) {
+                if (HPC_EXECUTORS.contains(constExpression.value)) {
                     addViolation(constExpression, "Expected a cloud-based executor such as 'awsbatch', found '${constExpression.value}'.")
                 }
             } else {
@@ -70,3 +53,4 @@ class ConfigExecutorAstVisitor extends AbstractAstVisitor {
         }
     }
 }
+
