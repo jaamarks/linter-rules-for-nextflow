@@ -24,10 +24,20 @@ class ConfigExecutorTest extends AbstractRuleTestCase<ConfigExecutorRule>{
     void configExecutor_NoViolations(){
         final SOURCE = '''
 process {
-  executor ='awsbatch'
+  executor = 'awsbatch'
 }
 '''
         assertNoViolations(SOURCE)
+    }
+
+    @Test
+    void configExecutor_LocalViolations(){
+        final SOURCE = '''
+process {
+  executor = 'local'
+}
+'''
+        assertSingleViolation(SOURCE, 3, "executor = 'local'", "Expected a cloud-based executor such as 'awsbatch', found 'local'.")
     }
 
     @Test

@@ -2,7 +2,7 @@ package software.amazon.nextflow.rules.config
 
 /*
  * Check the executor specified in nextflow.config to ensure that a
- * cloud-compatible executor is used instead of an HPC-based one.
+ * cloud-compatible executor is used instead of an HPC-based or local one.
  *
  * @author Jesse Marks
  */
@@ -23,7 +23,9 @@ class ConfigExecutorRule extends AbstractAstVisitorRule {
 
 class ConfigExecutorAstVisitor extends AbstractAstVisitor {
 
-    def HPC_EXECUTORS = [
+    def EXECUTORS = [
+            'local',
+            // HPC
             'slurm',
             'sge',
             'pbs'
@@ -44,7 +46,7 @@ class ConfigExecutorAstVisitor extends AbstractAstVisitor {
         if (executorName == 'executor' || executorName == 'process.executor') {
             if (expression.rightExpression instanceof ConstantExpression) {
                 def constExpression = expression.rightExpression as ConstantExpression
-                if (HPC_EXECUTORS.contains(constExpression.value)) {
+                if (EXECUTORS.contains(constExpression.value)) {
                     addViolation(constExpression, "Expected a cloud-based executor such as 'awsbatch', found '${constExpression.value}'.")
                 }
             } else {
