@@ -14,14 +14,14 @@ import org.codehaus.groovy.ast.expr.VariableExpression
 import org.codenarc.rule.AbstractAstVisitor
 import org.codenarc.rule.AbstractAstVisitorRule
 
-class ConfigExecutorRule extends AbstractAstVisitorRule {
+class ExecutorRule extends AbstractAstVisitorRule {
 
-    String name = 'ConfigExecutorRule'
+    String name = 'ExecutorRule'
     int priority = 1
-    Class astVisitorClass = ConfigExecutorAstVisitor
+    Class astVisitorClass = ExecutorAstVisitor
 }
 
-class ConfigExecutorAstVisitor extends AbstractAstVisitor {
+class ExecutorAstVisitor extends AbstractAstVisitor {
 
     def EXECUTORS = [
             'local',

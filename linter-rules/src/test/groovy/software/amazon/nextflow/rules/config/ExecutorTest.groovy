@@ -8,16 +8,16 @@ package software.amazon.nextflow.rules.config
 import org.codenarc.rule.AbstractRuleTestCase
 import org.junit.jupiter.api.Test
 
-class ConfigExecutorTest extends AbstractRuleTestCase<ConfigExecutorRule>{
+class ExecutorTest extends AbstractRuleTestCase<ExecutorRule>{
     @Override
-    protected ConfigExecutorRule createRule() {
-        return new ConfigExecutorRule()
+    protected ExecutorRule createRule() {
+        return new ExecutorRule()
     }
 
     @Test
     void ruleProperties(){
         assert rule.priority == 1
-        assert rule.name == 'ConfigExecutorRule'
+        assert rule.name == 'ExecutorRule'
     }
 
     @Test
