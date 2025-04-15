@@ -23,9 +23,8 @@ class IGenomesRule extends AbstractAstVisitorRule {
 
 class IGenomesAstVisitor extends AbstractAstVisitor {
 
-    def IGENOMES = [
-        '/fdb/igenomes_nf/'
-    ]
+    final String IGENOMES_PARAM_PATTERN = ".*igenome.*"
+    final String IGENOMES_S3 = "s3://.*"
 
     @Override
     void visitBinaryExpression(BinaryExpression expression) {
@@ -38,13 +37,12 @@ class IGenomesAstVisitor extends AbstractAstVisitor {
     }
 
     private void checkExpression(final BinaryExpression expression, def leftExpression) {
-        String executorName = leftExpression.text
-        // might make this a regex
-        if (executorName == 'igenomes_base' || executorName == 'params.igenomes_base') {
+        String iGenomesParamName = leftExpression.text
+        if (iGenomesParamName.matches(IGENOMES_PARAM_PATTERN)) {
             if (expression.rightExpression instanceof ConstantExpression) {
                 def constExpression = expression.rightExpression as ConstantExpression
-                if (IGENOMES.contains(constExpression.value)) {
-                    addViolation(constExpression, "Expected a cloud-based iGenomes base location (e.g., s3://ngi-igenomes), but found '${constExpression.value}'. Refer to https://ewels.github.io/AWS-iGenomes/ for a web tool to help locate the correct iGenomes references.")
+                if (!constExpression.value.matches(IGENOMES_S3)) {
+                    addViolation(constExpression, "Expected an AWS S3 iGenomes base location (e.g., s3://ngi-igenomes), but found '${constExpression.value}'. Refer to https://ewels.github.io/AWS-iGenomes/ for a web tool to help locate the correct iGenomes references.")
                 }
             } else {
                 addViolation(expression.rightExpression, "Expected a string literal for iGenomes location, found ${expression.rightExpression.text}")
