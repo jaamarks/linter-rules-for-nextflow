@@ -1,6 +1,7 @@
 FROM public.ecr.aws/amazonlinux/amazonlinux:2023
 
 RUN dnf install java-17 wget /usr/bin/xargs -y
+RUN dnf install vim -y
 
 WORKDIR /work
 COPY . ./src
