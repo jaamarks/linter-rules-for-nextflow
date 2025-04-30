@@ -1,6 +1,7 @@
 /*
- * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Test for config ExecutorRule.
+ * 
+ * @author Jesse Marks
  */
 
 package software.amazon.nextflow.rules.config

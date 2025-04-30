@@ -11,5 +11,6 @@
 
     <!-- Config rules -->
     <rule class="software.amazon.nextflow.rules.config.ExecutorRule"/>
+    <rule class="software.amazon.nextflow.rules.config.IGenomesRule"/>
     
 </ruleset>
