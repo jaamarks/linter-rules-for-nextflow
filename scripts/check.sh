@@ -5,7 +5,7 @@ echo "Checking with ruleset: ${RULESET:=healthomics}"
 
 if [ "$RULESET" == "config" ]; then
   INCLUDES="**/*.config"
-elif [ "$RULESET" == "general" || "$RULESET" == "healthomics" ]; then
+elif [ "$RULESET" == "general" ] || [ "$RULESET" == "healthomics" ]; then
   INCLUDES="**/*.nf"
 else
   # If RULESET is not "config", "healthomics", or "general" then exit and show an error message
